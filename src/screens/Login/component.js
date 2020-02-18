@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
-import {AsyncStorage, ToastAndroid, Image} from 'react-native';
-import {Button, Text, Form, Item, Input, Container, View} from 'native-base';
+import {
+  AsyncStorage,
+  Text,
+  View,
+  ToastAndroid,
+  Image,
+  TextInput,
+} from 'react-native';
+import {Button} from 'native-base';
 import axios from 'axios';
 import Style from './styles';
 import IMAGES from '../../config/image';
+import Email from '../../Svg/Email';
+import Password from '../../Svg/Password';
 
 export default class Login extends Component {
   static navigationOptions = {header: null};
@@ -36,40 +45,58 @@ export default class Login extends Component {
   render() {
     const {email, password} = this.state;
     return (
-      <Container style={Style.container}>
-        <View style={Style.logoBox}>
-          <Image style={Style.logo} source={IMAGES.appLogo} />
+      <View style={Style.mainScreen}>
+        <View style={Style.container}>
+          <View style={Style.form}>
+            <View style={Style.titleWrapper}>
+              <Text style={Style.title}>Masuk</Text>
+            </View>
+            <View style={Style.labelWrapper}>
+              <Text style={Style.label}>Nomor Ponsel / Email</Text>
+            </View>
+            <View style={Style.inputWrapper}>
+              <Email />
+              <TextInput
+                placeholderTextColor="#C4C4C4"
+                placeholder="Email"
+                underlineColorAndroid="transparent"
+                style={Style.input}
+                onChangeText={email => this.setState({email})}
+              />
+            </View>
+            <View style={Style.labelWrapper}>
+              <Text style={Style.label}>Pasword</Text>
+            </View>
+            <View style={Style.inputWrapper}>
+              <Password />
+              <TextInput
+                placeholderTextColor="#C4C4C4"
+                placeholder="Password"
+                underlineColorAndroid="transparent"
+                style={Style.input}
+                onChangeText={email => this.setState({email})}
+              />
+            </View>
+            <View style={Style.lupasWrapper}>
+              <Text style={Style.lupas}>Lupa Password?</Text>
+            </View>
+          </View>
+          <Button style={Style.btn}>
+            <Text uppercase={false} style={Style.btnTeks}>
+              Masuk
+            </Text>
+          </Button>
+          <Text style={Style.registerTeks}>
+            Belum punya akun?
+            <Text
+              onPress={() => this.props.navigation.navigate('Register')}
+              style={Style.registerTeksPress}>
+              {' '}
+              Daftar Sekarang
+            </Text>
+          </Text>
         </View>
-        <Form style={Style.form}>
-          <Item rounded>
-            <Input
-              placeholder="   Email"
-              value={email}
-              onChangeText={value => this.setState({email: value})}
-            />
-          </Item>
-          <Item rounded style={Style.textBox}>
-            <Input
-              placeholder="   Password"
-              value={password}
-              secureTextEntry={true}
-              onChangeText={value => this.setState({password: value})}
-            />
-          </Item>
-        </Form>
-        <Button rounded onPress={this.login} style={Style.btn1}>
-          <Text>Masuk</Text>
-        </Button>
-        <View style={Style.title2}>
-          <Text>Belum punya akun?</Text>
-        </View>
-        <Button
-          bordered
-          onPress={() => this.props.navigation.navigate('Register')}
-          style={Style.btn2}>
-          <Text style={Style.textBtn}>Daftar</Text>
-        </Button>
-      </Container>
+      </View>
     );
   }
 }
